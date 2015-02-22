@@ -35,8 +35,8 @@ module.exports = function(grunt) {
       } else {
         var dirName = path.dirname(file).split('/'),
             destPath = dirName.splice(1, dirName.length).join('/'),
-            outputFile = path.basename(file, '.swig'),
-            htmlFile = config.data.dest + '/' + destPath + '/' + outputFile + '.html',
+            outputFile = path.basename(file, '.html'),
+            htmlFile = config.data.dest + '/' + destPath + '/' + outputFile,
             tplVars = {},
             contextVars = {};
 
@@ -62,12 +62,12 @@ module.exports = function(grunt) {
 
         grunt.file.write(htmlFile, swig.renderFile(file, grunt.util._.extend(globalVars, tplVars, contextVars)));
 
-        if (config.data.sitemap_priorities !== undefined && config.data.sitemap_priorities[destPath + '/' + outputFile + '.html'] !== undefined) {
+        if (config.data.sitemap_priorities !== undefined && config.data.sitemap_priorities[destPath + '/' + outputFile] !== undefined) {
           pages.push({
             url: config.data.siteUrl + htmlFile.replace(config.data.dest + '/', ''),
             date: d,
             changefreq: 'weekly',
-            priority: config.data.sitemap_priorities[destPath + '/' + outputFile + '.html']
+            priority: config.data.sitemap_priorities[destPath + '/' + outputFile]
           });
         } else {
           pages.push({
